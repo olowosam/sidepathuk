@@ -1,45 +1,50 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Bot, CalendarDays, Check, ChevronRight, Clock3, Headphones, House, MessageCircle, Send, ShieldCheck, Sparkles, Users, X } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronRight, Clock3, Headphones, MessageCircle, Send, ShieldCheck, Sparkles, Users, X } from "lucide-react";
 
 type Message = { text: string; from: "agent" | "user" };
 
 const answers: Record<string, string> = {
-  "Find a 2-bed in Bristol": "I can help with that. I’ve found a lovely 2-bedroom home in Clifton, Bristol for £1,650 pcm. Would you like to see the details or book a viewing?",
-  "Book a viewing": "Of course! I have viewing slots on Thursday at 4:30pm or Saturday at 11:00am. Which works best for you?",
-  "Speak to an agent": "Absolutely. I’ve let the team know you’d like to speak with an agent. What’s the best number or email to reach you on?"
+  "Find a 2-bed in Bristol": "This demo includes a fictional 2-bedroom listing in Clifton for £1,650 pcm. It is not live property data or a statement of availability. A real setup would check the agency’s approved listings before recommending a property.",
+  "Request a viewing": "This demo cannot check a real calendar or book a viewing. In a live setup, the assistant would check the agency’s connected calendar, collect your preferred time, and send a request for the team to confirm.",
+  "Speak to an agent": "This is a demo, so no agent will be notified and no contact details are collected. A live assistant can offer a human handover using the agency’s chosen process."
 };
 
 function ChatPreview() {
-  return <div className="product-card" aria-label="Example conversation with the SidePath assistant">
-    <div className="card-top"><div className="agent-ident"><div className="agent-dot"><Sparkles size={16}/></div><div>SidePath assistant <div style={{fontWeight:400,color:"#86918a",fontSize:9,marginTop:3}}>Oak &amp; Stone Properties</div></div></div><div className="online"><span className="pulse"/> Online</div></div>
-    <div className="chat-body"><div className="chat-time">TODAY, 10:42 AM</div>
-      <div className="chat-bubble">Hi! I’m looking for a two-bed flat in Bristol, ideally under £1,800 a month.</div>
-      <div className="chat-bubble user">I can help you find a match. Do you have a preferred area or move-in date?</div>
+  return <div className="product-card" aria-label="Sample conversation with the SidePath assistant">
+    <div className="card-top"><div className="agent-ident"><div className="agent-dot"><Sparkles size={16}/></div><div>SidePath assistant <div style={{fontWeight:400,color:"#86918a",fontSize:9,marginTop:3}}>Sample agency · Demo</div></div></div><div className="online"><span className="pulse"/> Demo</div></div>
+    <div className="chat-body"><div className="chat-time">SAMPLE CONVERSATION</div>
+      <div className="chat-bubble">Hi, I’m looking for a two-bed flat in Bristol, ideally under £1,800 a month.</div>
+      <div className="chat-bubble user">I can help you explore suitable listings. Do you have a preferred area or move-in date?</div>
       <div className="chat-bubble">Clifton would be great. Hoping to move next month.</div>
-      <div className="listing-mini"><div className="listing-photo"/><div><div className="listing-name">Bright 2-bed in Clifton</div><div className="listing-detail">Clifton, Bristol · Available 1 June</div><div className="listing-price">£1,650 pcm</div></div></div>
-      <div className="chat-input"><span>Type your message...</span><button aria-label="Send" className="send-button"><Send size={12}/></button></div>
+      <div className="listing-mini"><div className="listing-photo"/><div><div className="listing-name">Example 2-bed in Clifton</div><div className="listing-detail">Fictional sample · Bristol</div><div className="listing-price">Example: £1,650 pcm</div></div></div>
+      <div className="chat-input"><span>Interactive sample below</span><button aria-label="Demo only" className="send-button"><Send size={12}/></button></div>
     </div>
   </div>;
 }
 
 function DemoWidget() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([{text:"Hello! I’m the SidePath demo assistant. What can I help you with today?",from:"agent"}]);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([{text:"Hi! This is a scripted SidePath demo. Choose a sample question to see how an assistant could respond.",from:"agent"}]);
+  const [selected, setSelected] = useState(false);
 
   function choose(prompt: string) {
-    setSelected(prompt);
+    setSelected(true);
     setMessages((items) => [...items, {text:prompt,from:"user"}, {text:answers[prompt],from:"agent"}]);
   }
 
+  function restart() {
+    setSelected(false);
+    setMessages([{text:"Hi! This is a scripted SidePath demo. Choose a sample question to see how an assistant could respond.",from:"agent"}]);
+  }
+
   return <div className="demo-widget">
-    {open && <div className="widget-panel" role="dialog" aria-label="SidePath interactive demo">
-      <div className="widget-head"><div><strong>SidePath assistant</strong><small>Demo · Online now</small></div><button onClick={()=>setOpen(false)} aria-label="Close demo"><X size={17}/></button></div>
+    {open && <div className="widget-panel" role="dialog" aria-label="SidePath scripted demo">
+      <div className="widget-head"><div><strong>SidePath assistant · Demo</strong><small>Sample replies · Not connected to an agency</small></div><button onClick={()=>setOpen(false)} aria-label="Close demo"><X size={17}/></button></div>
       <div className="widget-messages">{messages.map((msg,i)=><div key={i} className={`widget-msg ${msg.from === "user" ? "user" : ""}`}>{msg.text}</div>)}</div>
-      <div className="widget-options">{!selected ? Object.keys(answers).map((prompt)=><button key={prompt} onClick={()=>choose(prompt)}>{prompt} <ChevronRight size={12} style={{float:"right"}}/></button>) : <button onClick={()=>{setSelected(null);setMessages([{text:"Hello! I’m the SidePath demo assistant. What can I help you with today?",from:"agent"}]);}}>Start a new demo <ArrowRight size={12} style={{float:"right"}}/></button>}</div>
-      <div className="widget-disclaimer">Demo conversation · No messages are sent or stored</div>
+      <div className="widget-options">{!selected ? Object.keys(answers).map((prompt)=><button key={prompt} onClick={()=>choose(prompt)}>{prompt} <ChevronRight size={12} style={{float:"right"}}/></button>) : <button onClick={restart}>Try another sample question <ArrowRight size={12} style={{float:"right"}}/></button>}</div>
+      <div className="widget-disclaimer">Demo only · No AI, real booking, agent notification, or data collection</div>
     </div>}
     <button className="widget-toggle" onClick={()=>setOpen(!open)} aria-label={open ? "Close chat demo" : "Open chat demo"}>{open ? <X size={23}/> : <MessageCircle size={23}/>}</button>
   </div>;
@@ -51,10 +56,10 @@ export default function HomePage() {
     <section className="hero" id="home"><div className="shell hero-inner"><div>
       <div className="eyebrow"><span className="pulse"/> Your always-on estate agency assistant</div>
       <h1>Every enquiry.<br/>A better <em>next step.</em></h1>
-      <p className="hero-copy">SidePath helps estate agents capture new leads, answer property questions, book viewings and follow up—so your team can focus on the people ready to move.</p>
+      <p className="hero-copy">SidePath helps estate agents capture new leads, answer property questions, book viewing requests and follow up—so your team can focus on the people ready to move.</p>
       <div className="hero-actions"><a className="button-primary" href="#contact">See what SidePath can do <ArrowRight size={15}/></a><a className="button-quiet" href="#how"><span style={{width:28,height:28,border:"1px solid rgba(255,255,255,.28)",borderRadius:"50%",display:"grid",placeItems:"center"}}><ArrowDown size={13}/></span> Explore how it works</a></div>
-      <div className="trust-row"><div className="avatar-stack"><span>J</span><span>A</span><span>M</span></div><span>Built around the way your agency works</span></div>
-    </div><div className="hero-visual"><ChatPreview/><div className="floating-note note-one"><span className="note-icon"><CalendarDays size={15}/></span> Viewing booked · Sat 11:00</div><div className="floating-note note-two"><span className="note-icon"><Check size={15}/></span> New lead captured</div></div></div></section>
+      <div className="trust-row"><div className="avatar-stack"><span>J</span><span>A</span><span>M</span></div><span>Configured around your agency’s workflow</span></div>
+    </div><div className="hero-visual"><ChatPreview/><div className="floating-note note-one"><span className="note-icon"><CalendarDays size={15}/></span> Viewing request · Demo</div><div className="floating-note note-two"><span className="note-icon"><Check size={15}/></span> Lead details · Example</div></div></div></section>
 
     <section className="section" id="features"><div className="shell"><div className="section-heading"><div className="section-kicker">More time for people</div><h2>Small tasks, handled.<br/>Great service, remembered.</h2><p>Give every enquiry a helpful first response—even when your team is busy, out on viewings, or off for the day.</p></div><div className="features-grid">
       <article className="feature"><div className="feature-icon"><MessageCircle size={19}/></div><h3>Reply to new enquiries</h3><p>Answer common questions quickly using your approved property details and agency information.</p></article>
@@ -70,7 +75,7 @@ export default function HomePage() {
       <div className="step"><div className="step-number">02</div><div><strong>SidePath answers and listens</strong><span>It responds using approved information and asks the right next question.</span></div></div>
       <div className="step"><div className="step-number">03</div><div><strong>Your team gets the handover</strong><span>Lead details and viewing requests go to your chosen tools for a human to follow through.</span></div></div>
     </div></div>
-    <div className="workflow-panel"><div className="panel-header"><span>Enquiry overview</span><small>Sample agency dashboard · Today</small></div><div className="lead-row head"><span>LEAD</span><span>INTEREST</span><span>STATUS</span><span>TIME</span></div>
+    <div className="workflow-panel"><div className="panel-header"><span>Enquiry overview</span><small>Illustrative sample · Not live data</small></div><div className="lead-row head"><span>LEAD</span><span>INTEREST</span><span>STATUS</span><span>TIME</span></div>
       <div className="lead-row"><div className="lead-person"><span className="lead-avatar">LM</span>Lauren M.</div><span>2-bed · Bristol</span><span className="status">Viewing</span><span>10:42</span></div>
       <div className="lead-row"><div className="lead-person"><span className="lead-avatar" style={{background:"#f1dfbd"}}>DK</span>David K.</div><span>House · Bath</span><span className="status warm">Follow up</span><span>10:18</span></div>
       <div className="lead-row"><div className="lead-person"><span className="lead-avatar" style={{background:"#d8dcf5"}}>AS</span>Aisha S.</div><span>Flat · Cardiff</span><span className="status new">New lead</span><span>09:56</span></div>
