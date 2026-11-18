@@ -5,6 +5,8 @@ import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronRight,
 
 type Message = { text: string; from: "agent" | "user" };
 
+const CALENDLY_URL = "https://calendly.com/olowoferanmi23/30min";
+
 const answers: Record<string, string> = {
   "Find a 2-bed in Bristol": "This demo includes a fictional 2-bedroom listing in Clifton for £1,650 pcm. It is not live property data or a statement of availability. A real setup would check the agency’s approved listings before recommending a property.",
   "Request a viewing": "This demo cannot check a real calendar or book a viewing. In a live setup, the assistant would check the agency’s connected calendar, collect your preferred time, and send a request for the team to confirm.",
@@ -52,12 +54,12 @@ function DemoWidget() {
 
 export default function HomePage() {
   return <main>
-    <nav className="nav shell"><a href="#home" className="logo"><span className="logo-mark"><ArrowUpRight size={19}/></span>sidepath<span style={{color:"#b6f36a"}}>uk</span></a><div className="nav-links"><a href="#how">How it works</a><a href="#features">What it does</a><a href="#integrations">Integrations</a><a className="nav-cta" href="#contact">Book a demo <ArrowRight size={13} style={{display:"inline",verticalAlign:"middle",marginLeft:4}}/></a></div></nav>
+    <nav className="nav shell"><a href="#home" className="logo"><span className="logo-mark"><ArrowUpRight size={19}/></span>sidepath<span style={{color:"#b6f36a"}}>uk</span></a><div className="nav-links"><a href="#how">How it works</a><a href="#features">What it does</a><a href="#integrations">Integrations</a><a className="nav-cta" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a demo <ArrowRight size={13} style={{display:"inline",verticalAlign:"middle",marginLeft:4}}/></a></div></nav>
     <section className="hero" id="home"><div className="shell hero-inner"><div>
       <div className="eyebrow"><span className="pulse"/> Your always-on estate agency assistant</div>
       <h1>Every enquiry.<br/>A better <em>next step.</em></h1>
       <p className="hero-copy">SidePath helps estate agents capture new leads, answer property questions, book viewing requests and follow up—so your team can focus on the people ready to move.</p>
-      <div className="hero-actions"><a className="button-primary" href="#contact">See what SidePath can do <ArrowRight size={15}/></a><a className="button-quiet" href="#how"><span style={{width:28,height:28,border:"1px solid rgba(255,255,255,.28)",borderRadius:"50%",display:"grid",placeItems:"center"}}><ArrowDown size={13}/></span> Explore how it works</a></div>
+      <div className="hero-actions"><a className="button-primary" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">See what SidePath can do <ArrowRight size={15}/></a><a className="button-quiet" href="#how"><span style={{width:28,height:28,border:"1px solid rgba(255,255,255,.28)",borderRadius:"50%",display:"grid",placeItems:"center"}}><ArrowDown size={13}/></span> Explore how it works</a></div>
       <div className="trust-row"><div className="avatar-stack"><span>J</span><span>A</span><span>M</span></div><span>Configured around your agency’s workflow</span></div>
     </div><div className="hero-visual"><ChatPreview/><div className="floating-note note-one"><span className="note-icon"><CalendarDays size={15}/></span> Viewing request · Demo</div><div className="floating-note note-two"><span className="note-icon"><Check size={15}/></span> Lead details · Example</div></div></div></section>
 
@@ -79,12 +81,12 @@ export default function HomePage() {
       <div className="lead-row"><div className="lead-person"><span className="lead-avatar">LM</span>Lauren M.</div><span>2-bed · Bristol</span><span className="status">Viewing</span><span>10:42</span></div>
       <div className="lead-row"><div className="lead-person"><span className="lead-avatar" style={{background:"#f1dfbd"}}>DK</span>David K.</div><span>House · Bath</span><span className="status warm">Follow up</span><span>10:18</span></div>
       <div className="lead-row"><div className="lead-person"><span className="lead-avatar" style={{background:"#d8dcf5"}}>AS</span>Aisha S.</div><span>Flat · Cardiff</span><span className="status new">New lead</span><span>09:56</span></div>
-      <div className="stats-row"><div className="stat"><span>Enquiries handled</span><strong>24</strong></div><div className="stat"><span>Viewing requests</span><strong>08</strong></div><div className="stat"><span>Team handovers</span><strong>06</strong></div></div>
+      <div class="stats-row"><div class="stat"><span>Enquiries handled</span><strong>24</strong></div><div class="stat"><span>Viewing requests</span><strong>08</strong></div><div class="stat"><span>Team handovers</span><strong>06</strong></div></div>
     </div></div></section>
 
     <section className="section" id="integrations"><div className="shell"><div className="section-heading"><div className="section-kicker">Works with your toolkit</div><h2>Start simple. Connect what you need.</h2><p>Every agency works differently. We’ll shape the setup around the tools and channels your team already uses.</p><div className="integrations"><span className="integration">Website chat</span><span className="integration">WhatsApp</span><span className="integration">Google Calendar</span><span className="integration">HubSpot</span><span className="integration">Follow Up Boss</span><span className="integration">Email</span></div></div></div></section>
 
-    <section className="cta-section" id="contact"><div className="shell"><div className="cta-box"><div className="cta-copy"><div className="eyebrow"><span className="pulse"/> Let’s talk about your workflow</div><h2>What could your team do with a little more time?</h2><p>Tell us how enquiries move through your agency. We’ll show you what a tailored assistant could look like.</p></div><a className="button-primary" href="mailto:hello@sidepathuk.co.uk?subject=SidePath%20demo%20request">Book a free walkthrough <ArrowRight size={15}/></a></div></div></section>
+    <section className="cta-section" id="contact"><div className="shell"><div className="cta-box"><div className="cta-copy"><div className="eyebrow"><span className="pulse"/> Let’s talk about your workflow</div><h2>What could your team do with a little more time?</h2><p>Tell us how enquiries move through your agency. We’ll show you what a tailored assistant could look like.</p></div><a className="button-primary" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a free walkthrough <ArrowRight size={15}/></a></div></div></section>
 
     <footer className="footer"><div className="shell footer-inner"><div><a href="#home" className="logo"><span className="logo-mark"><ArrowUpRight size={19}/></span>sidepath<span style={{color:"#b6f36a"}}>uk</span></a><div className="footer-note">A more helpful first step for every property enquiry.</div></div><div className="footer-links"><span>Built for UK estate agencies</span><a href="mailto:hello@sidepathuk.co.uk">Get in touch</a><span>© {new Date().getFullYear()} SidePathUK</span></div></div></footer>
     <DemoWidget/>
